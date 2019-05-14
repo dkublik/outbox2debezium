@@ -22,6 +22,17 @@ repositories {
 }
 
 dependencies {
+	annotationProcessor("org.projectlombok:lombok")
+	
 	implementation("org.springframework.boot:spring-boot-starter")
+	implementation("org.codehaus.groovy:groovy-all:2.5.6")
+	implementation("org.projectlombok:lombok")
+
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("org.spockframework:spock-spring:1.3-groovy-2.5")
+}
+
+tasks.withType(Wrapper::class.java).configureEach {
+	gradleVersion = "5.4.1"
 }
