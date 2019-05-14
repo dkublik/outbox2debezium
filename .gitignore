@@ -33,3 +33,5 @@ HELP.md
 
 /naive/build/
 /naive/out/
+/outbox/build/
+/outbox/out/

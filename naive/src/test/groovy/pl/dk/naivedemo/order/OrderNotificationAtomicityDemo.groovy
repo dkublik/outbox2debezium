@@ -26,7 +26,7 @@ class OrderNotificationAtomicityDemo extends BaseSpecification {
         emailSender.send(new Email("order $ORDER_ID received"))
 
         then:
-        orderisSaved(ORDER_ID)
+        orderIsSaved(ORDER_ID)
         emailIsSent(ORDER_ID)
     }
 
@@ -42,7 +42,7 @@ class OrderNotificationAtomicityDemo extends BaseSpecification {
         }
 
         then:
-        orderisSaved(ORDER_ID)
+        orderIsSaved(ORDER_ID)
         !emailIsSent(ORDER_ID)
     }
 
@@ -61,10 +61,10 @@ class OrderNotificationAtomicityDemo extends BaseSpecification {
 
         then:
         emailIsSent(ORDER_ID)
-        !orderisSaved(ORDER_ID)
+        !orderIsSaved(ORDER_ID)
     }
 
-    private boolean orderisSaved(UUID orderId) {
+    private boolean orderIsSaved(UUID orderId) {
         return orderRepository.findById(orderId).isPresent()
     }
 
