@@ -1,9 +1,9 @@
-package pl.dk.outbox2deb.order
+package pl.dk.naivedemo.order
 
 import org.springframework.beans.factory.annotation.Autowired
-import pl.dk.outbox2deb.email.Email
-import pl.dk.outbox2deb.email.EmailSender
-import pl.dk.outbox2deb.test.BaseSpecification
+import pl.dk.naivedemo.email.Email
+import pl.dk.naivedemo.email.EmailSender
+import pl.dk.naivedemo.test.BaseSpecification
 
 import static java.util.UUID.randomUUID
 

@@ -1,4 +1,4 @@
-package pl.dk.outbox2deb.test
+package pl.dk.naivedemo.test
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

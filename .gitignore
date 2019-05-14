@@ -28,3 +28,8 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+.DS_Store
+
+/naive/build/
+/naive/out/

@@ -1,4 +1,4 @@
-package pl.dk.outbox2deb.order;
+package pl.dk.naivedemo.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

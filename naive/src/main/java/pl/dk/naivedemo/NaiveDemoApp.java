@@ -1,13 +1,13 @@
-package pl.dk.outbox2deb;
+package pl.dk.naivedemo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Outbox2DebeziumApp {
+public class NaiveDemoApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Outbox2DebeziumApp.class, args);
+		SpringApplication.run(NaiveDemoApp.class, args);
 	}
 
 }

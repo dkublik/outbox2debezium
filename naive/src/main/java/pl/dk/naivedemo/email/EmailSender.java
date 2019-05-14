@@ -1,4 +1,4 @@
-package pl.dk.outbox2deb.email;
+package pl.dk.naivedemo.email;
 
 import lombok.Getter;
 import org.springframework.stereotype.Service;
