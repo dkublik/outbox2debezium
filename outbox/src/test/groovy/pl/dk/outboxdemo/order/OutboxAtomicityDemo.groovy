@@ -1,16 +1,20 @@
-package pl.dk.naivedemo.order
+package pl.dk.outboxdemo.order
 
 import org.springframework.beans.factory.annotation.Autowired
-import pl.dk.naivedemo.email.Email
-import pl.dk.naivedemo.email.EmailSender
-import pl.dk.naivedemo.test.BaseSpecification
+import pl.dk.outboxdemo.email.EmailSender
+import pl.dk.outboxdemo.test.BaseSpecification
 
 import static java.util.UUID.randomUUID
+import static java.util.concurrent.TimeUnit.SECONDS
+import static org.awaitility.Awaitility.await
 
-class OrderNotificationAtomicityDemo extends BaseSpecification {
+class OutboxAtomicityDemo extends BaseSpecification {
 
     @Autowired
     OrderRepository orderRepository
+
+    @Autowired
+    OrderEventRepository orderEventRepository
 
     @Autowired
     EmailSender emailSender
@@ -22,31 +26,20 @@ class OrderNotificationAtomicityDemo extends BaseSpecification {
         Order order = new Order(ORDER_ID, 'example order')
 
         when:
-        orderRepository.save(order)
-        emailSender.send(new Email("order $ORDER_ID received"))
-
-        then:
-        orderIsSaved(ORDER_ID)
-        emailIsSent(ORDER_ID)
-    }
-
-    def "will not be atomic - email failed to send"() {
-        given:
-        Order order = new Order(ORDER_ID, 'example order')
-
-        when:
-        logException {
+        doInTx {
             orderRepository.save(order)
-            throw new RuntimeException()
-            emailSender.send(new Email("order $ORDER_ID received"))
+            orderEventRepository.save(new OrderPlacedEvent(ORDER_ID))
         }
 
         then:
         orderIsSaved(ORDER_ID)
-        !emailIsSent(ORDER_ID)
+        eventIsSaved(ORDER_ID)
+        await().atMost(5, SECONDS).until {
+            emailIsSent(ORDER_ID)
+        }
     }
 
-    def "will not be atomic - order failed to save"() {
+    def "should persist nothing when exception occurs"() {
         given:
         Order order = new Order(ORDER_ID, 'example order')
 
@@ -54,21 +47,25 @@ class OrderNotificationAtomicityDemo extends BaseSpecification {
         logException {
             doInTx {
                 orderRepository.save(order)
-                emailSender.send(new Email("order $ORDER_ID received"))
                 throw new RuntimeException()
+                orderEventRepository.save(new OrderPlacedEvent(ORDER_ID))
             }
         }
 
         then:
-        emailIsSent(ORDER_ID)
         !orderIsSaved(ORDER_ID)
+        !eventIsSaved(ORDER_ID)
     }
 
     private boolean orderIsSaved(UUID orderId) {
         return orderRepository.findById(orderId).isPresent()
     }
 
+    private boolean eventIsSaved(UUID orderId) {
+        orderEventRepository.findByOrderId(orderId).size() > 0
+    }
+
     private boolean emailIsSent(UUID orderId) {
-        return emailSender.sentEmails.any({it.isForOrder(orderId)})
+        emailSender.sentEmails.any({it.isForOrder(orderId)})
     }
 }

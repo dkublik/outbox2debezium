@@ -23,4 +23,5 @@ dependencies {
 	testImplementation("org.spockframework:spock-spring:1.3-groovy-2.5")
 	testImplementation("org.testcontainers:spock:1.11.2")
 	testImplementation("org.testcontainers:postgresql:1.11.2")
+	testImplementation("org.awaitility:awaitility-groovy:3.1.6")
 }

@@ -16,5 +16,6 @@ class DbCleaner {
     @Transactional
     void clearTables() {
         entityManager.createNativeQuery("TRUNCATE TABLE orders CASCADE").executeUpdate()
+        entityManager.createNativeQuery("TRUNCATE TABLE order_events CASCADE").executeUpdate()
     }
 }
