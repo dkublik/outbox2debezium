@@ -19,6 +19,9 @@ dependencies {
 	implementation("org.projectlombok:lombok")
 	implementation("org.postgresql:postgresql")
 
+	implementation("io.debezium:debezium-embedded:0.9.5.Final")
+	implementation("io.debezium:debezium-connector-postgres:0.9.5.Final")
+
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.spockframework:spock-spring:1.3-groovy-2.5")
 	testImplementation("org.testcontainers:spock:1.11.2")
