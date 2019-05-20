@@ -1,2 +1,2 @@
 rootProject.name = 'outbox2deb'
-include ':naive', ':outbox', ':debezium'
+include ':naive', ':outbox', ':outbox-eventlistener', ':debezium'
