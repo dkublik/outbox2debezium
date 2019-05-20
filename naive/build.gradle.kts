@@ -1,7 +1,7 @@
 plugins {
 	java
 	groovy
-	id("org.springframework.boot") version "2.1.4.RELEASE"
+	id("org.springframework.boot") version "2.1.5.RELEASE"
 }
 
 apply(plugin = "io.spring.dependency-management")
@@ -15,7 +15,7 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.codehaus.groovy:groovy-all:2.5.6")
+	implementation("org.codehaus.groovy:groovy-all:2.5.7")
 	implementation("org.projectlombok:lombok")
 	implementation("org.postgresql:postgresql")
 
