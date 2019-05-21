@@ -12,6 +12,7 @@ public class EmailSender {
 
     private final List<Email> sentEmails = new ArrayList<>();
 
+    // imitating communication with an external email-service
     public void send(Email email) {
         sentEmails.add(email);
     }

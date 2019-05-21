@@ -22,11 +22,16 @@ class OrderNotificationAtomicityDemo extends BaseSpecification {
         Order order = new Order(ORDER_ID, 'example order')
 
         when:
-        orderRepository.save(order)
-        emailSender.send(new Email("order $ORDER_ID received"))
+        logException {
+            doInTx {
+                orderRepository.save(order)
+                emailSender.send(new Email("order $ORDER_ID received"))
+                throw new RuntimeException()
+            }
+        }
 
         then:
-        orderIsSaved(ORDER_ID)
+        !orderIsSaved(ORDER_ID)
         emailIsSent(ORDER_ID)
     }
 

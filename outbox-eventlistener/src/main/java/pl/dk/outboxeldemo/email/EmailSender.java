@@ -1,14 +1,8 @@
 package pl.dk.outboxeldemo.email;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import pl.dk.outboxeldemo.order.event.OrderEventRepository;
-import pl.dk.outboxeldemo.order.event.OrderPlacedStorableEvent.Status;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,20 +10,11 @@ import java.util.List;
 @Getter
 public class EmailSender {
 
-    @Autowired
-    private OrderEventRepository orderEventRepository;
-
-    static final int BATCH_SIZE = 10;
-
     private final List<Email> sentEmails = new ArrayList<>();
 
-    @Scheduled(fixedDelay = 100)
-    @Transactional
-    public void sendEmailsOnEvents() {
-        orderEventRepository.findByStatusOrderByCreated(Status.NEW, PageRequest.of(0, BATCH_SIZE)).forEach(event -> {
-            sentEmails.add(new Email("received order: " + event.getOrderId()));
-            event.processed();
-        });
+    // imitating communication with an external email-service
+    public void send(Email email) {
+        sentEmails.add(email);
     }
 
     public void clear() {

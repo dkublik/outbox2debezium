@@ -11,8 +11,6 @@ import java.util.UUID;
 @Getter
 public class EmailSender {
 
-    static final int BATCH_SIZE = 10;
-
     private final List<Email> sentEmails = new ArrayList<>();
 
     public void sendEmail(UUID orderId) {
